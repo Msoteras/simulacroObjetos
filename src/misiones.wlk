@@ -8,7 +8,25 @@ class Mision{
 	
 	method puedeSerSuperada()
 	
+	method puedeRealizarse()
+	
 	method cantidadDeParticipantes() = participantes.size()
+		
+	
+	method realizar() {
+		
+		if(!self.puedeRealizarse()){
+				throw new DomainException(message = "Misión no puede empezar")
+		}
+		
+		if(self.puedeSerSuperada()){
+			participantes.forEach{participante => participante.ganarCopas(self.copasEnJuego())}
+		}
+	
+		else{
+			participantes.forEach{participante => participante.perderCopas(self.copasEnJuego())}
+		}
+	}
 	
 }	
 
@@ -20,6 +38,8 @@ class Individuales inherits Mision{
 	
 	override method puedeSerSuperada() =
 		self.participante().tieneEstrategia() || self.participante().destreza() > dificultad
+	
+	override method puedeRealizarse() = self.participante().copas() >= 10
 		
 	method participante() = participantes.head()
 }
@@ -31,6 +51,8 @@ class PorEquipo inherits Mision{
 	override method puedeSerSuperada() = 
 		participantes.filter{participante => participante.tieneEstrategia()}.size() > self.cantidadDeParticipantes()/2
 		|| participantes.all{participante => participante.destreza() > 400} 
+
+	override method puedeRealizarse() = participantes.map{participante => participante.copas()}.sum() > 60
 }
 	
 

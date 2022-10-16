@@ -10,6 +10,8 @@ class Personaje{  // ?
 		copas-= copasPerdidas
 	}
 	
+	method copas() = copas
+	
 	method destreza() // ??
 }
 
