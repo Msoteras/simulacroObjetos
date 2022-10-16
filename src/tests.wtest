@@ -1,6 +1,30 @@
+import personajes.*
+import misiones.*
 
-test "testX" {
+describe "Misiones Individuales"{
+	
+	test "Una mision individual puede ser superada si el participante tiene estrategia" {
 
-	assert.that(true)
+		const participante=new Arquero(agilidad=10, rango = 150)
+		const mision=new Individual(participantes=[participante],dificultad = 2000, tipo = comun)
+		assert.that(mision.puedeSerSuperada())
+
+	}
+	
+	test "Una mision individual puede ser superada si el participante tiene un nivel de destreza mayor a la dificultad de la mision" {
+
+		const participante=new Arquero(agilidad=50, rango = 100)
+		const mision=new Individual(participantes=[participante],dificultad = 2000, tipo= comun)
+		assert.that(mision.puedeSerSuperada())
+
+	}
+	
+	test "Una mision individual no puede ser superada si el participante no tiene estrategia y no tiene un nivel de destreza mayor a la dificultad de la mision" {
+
+		const participante=new Arquero(agilidad=50, rango = 100)
+		const mision=new Individual(participantes=[participante],dificultad = 6000, tipo= comun)
+		assert.notThat(mision.puedeSerSuperada())
+	}
 
 }
+
